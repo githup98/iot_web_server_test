@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+		<meta name="apple-mobile-web-app-capable" content="yes"/>
+		<link rel="stylesheet" href="newApp.css">
+		<script src='jquery-3.3.1.min.js'></script>
+		<script async src="newApp.js"></script>
+		<title>ESP32 IoT Web</title>
+	</head>
+	<body>
+		<header>
+			<h1>EPS32 Application Dev</h1>
+		</header>
+		
+		<div id="ledStatus">
+			<h2>Led Status</h2>
+			<label for="ledGreen">Led Green: </label>
+			<div id="ledGreen"></div>
+			<label for="ledRed">Led Red: </label>
+			<div id="ledRed"></div>
+		</div>
+
+		<hr>
+		
+		<div id="getDHTValue">
+			<h2>Get DHT Value</h2>
+			<label for="getTempDHT">Temperature: </label>
+			<div id="getTempDHT"></div>
+			<label for="getHuminityDHT">Huminity: </label>
+			<div id="getHuminityDHT"></div>
+		</div>
+		
+
+		<hr>
+		<div id="inputDHTValue">
+			<h2>Input DHT Value</h2>
+			<section>
+				<input id="tempDHT" type="text" maxlength="64" placeholder="type temperature here" value=""/>
+			</section>
+			<section>
+				<input id= "huminityDHT" type="text" maxlength="64" placeholder="type huminity here" value=""/>
+			</section>
+			
+			<div class="button">
+				<input id="updateDHTValue" type="button" value="Update"/>
+			</div>
+		</div>
+		
+		<hr>
+
+		<div id="updateFirmware">
+			<h2>Update Firmware For Esp32 Device</h2>
+			<div id="getFirmware"></div>
+			<input type="file" id="fileSelect" accept=".bin" style="display: none;" onchange="getFileInfo()">
+			<div class="buttons">
+				<input type="button" value="File" onclick="document.getElementById('fileSelect').click();"/>
+				<input type="button" value="Update" onclick="startUpdateFirmware()"/>
+			</div>
+			<h4 id="fileInfo"></h4>
+			<h4 id="otaStatus"></h4>
+		</div>
+
+		<hr>
+
+		<div id="getInfo">
+			<h2> Get Info From User</h2>
+			<section>
+				<input id="deviceName1" type="text" maxlength="64" placeholder="type device name 1" value=""/>
+				<input id="command" type="text" maxlength="64" placeholder="type command" value=""/>
+				<input type="checkbox" onclick="runCode()"/>Run Code
+			</section>
+			<section>
+				<input id="deviceName2" type="text" maxlength="64" placeholder="type device name 2" value=""/>
+				<input id="command" type="text" maxlength="64" placeholder="type command" value=""/>
+			</section>
+		</div>
+		
+		<hr>
+
+		<div id="button">
+			<h2>Button</h2>
+			<div class="button">
+				<input id="checkStatus" type="button" value="Check Status"/>
+			</div>
+		</div>
+
+	</body>
+</html>
