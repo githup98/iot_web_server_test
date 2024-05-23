@@ -86,7 +86,12 @@ function getFileInfo()
 	var file = x.files[0];
 	document.getElementById("fileInfo").innerHTML = " File: " + file.name + "<br>" + "Size: " + file.size + " bytes"; //"<br>" is newline
 }
-
+function getSSID()                                                                                                                                                                 
+{
+     $.getJSON('/apSSID.json', function(data) {
+         $("#ap_ssid").text(data["ssid"]);
+     });
+}
 function startUpdateFirmware()
 {
 	
