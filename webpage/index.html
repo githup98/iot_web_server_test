@@ -1,90 +1,123 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="write-html5" lang="en"> 
 	<head>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
 		<meta name="apple-mobile-web-app-capable" content="yes"/>
-		<link rel="stylesheet" href="app.css">
+		<link rel="stylesheet" href="main.css" type="text/css">
 		<script src='jquery-3.3.1.min.js'></script>
-		<script async src="app.js"></script>
-		<title>ESP32 IoT Web</title>
+		<script async src="main.js"></script>
 	</head>
 	<body>
-		<header>
-			<h1>EPS32 Application Dev</h1>
-		</header>
-		
-		<div id="ledStatus">
-			<h2>Led Status</h2>
-			<label for="ledGreen">Led Green: </label>
-			<div id="ledGreen"></div>
-			<label for="ledRed">Led Red: </label>
-			<div id="ledRed"></div>
-		</div>
+		<div class="background">
+			<div class="status"><h2>Status</h2>
+				<label for="greenLed">Green Led: </label>
+				<div id="greenLedID"></div>
+				<label for="redLed">Red Led: </label>
+				<div id="redLedID"></div><br>
+				<label for="temp">Temperature: </label>
+				<div id="tempID"></div>
+				<label for="huminity">Huminity: </label>
+				<div id="huminityID"></div>
 
-		<hr>
-		
-		<div id="getDHTValue">
-			<h2>Get DHT Value</h2>
-			<label for="getTempDHT">Temperature: </label>
-			<div id="getTempDHT"></div>
-			<label for="getHuminityDHT">Huminity: </label>
-			<div id="getHuminityDHT"></div>
-		</div>
-		
-
-		<hr>
-		<div id="inputDHTValue">
-			<h2>Input DHT Value</h2>
-			<section>
-				<input id="tempDHT" type="text" maxlength="64" placeholder="type temperature here" value=""/>
-			</section>
-			<section>
-				<input id= "huminityDHT" type="text" maxlength="64" placeholder="type huminity here" value=""/>
-			</section>
-			
-			<div class="button">
-				<input id="updateDHTValue" type="button" value="Update"/>
+				<!-- -->
+				<br>
+				<br>
+				<label for="lb_device1">Device 1:</label>
+				<div id="device1"></div>
+				<br>
+				<label for="lb_device2">Device 2:</label>
+				<div id="device2"></div>
+				<!-- -->
 			</div>
-		</div>
 		
-		<hr>
-
-		<div id="updateFirmware">
-			<h2>Update Firmware For Esp32 Device</h2>
-			<div id="getFirmware"></div>
-			<input type="file" id="fileSelect" accept=".bin" style="display: none;" onchange="getFileInfo()">
-			<div class="buttons">
-				<input type="button" value="File" onclick="document.getElementById('fileSelect').click();"/>
-				<input type="button" value="Update" onclick="startUpdateFirmware()"/>
+			<div class="control"><h2>Control</h2>
+					<label for="controlGrLed">Green Led</label>
+					<select id="selectGreenState" style="width: 50px;" >
+						<option value="OFF">OFF</option>
+						<option value="ON">ON</option>
+					</select>
+					<label for="controlRedLed">Red Led</label>
+					<select id="selectRedState" style="width: 50px;">
+						<option value="OFF">OFF</option>
+						<option value="ON">ON</option>
+					</select>
+				<label for="controlTemp">Temperature: </label>
+				<input id="inputTemp" style="width: 20px;" type="text" placeholder="Temp" value="">
+				<label for="controlHuminity">Huminity: </label>
+				<input id="inputHuminity" style="width: 20px;" type="text" placeholder="Humi" value="">
+				<input id="sendControl" type="button" value="Send">
 			</div>
-			<h4 id="fileInfo"></h4>
-			<h4 id="otaStatus"></h4>
-		</div>
+			<!--
+				in css file, .deviceManagement is for class (start with dot mark), start with #mark for id 
+			-->
+			<div class="deviceManagement">
+				<h1>Device</h1>
+				<!--
+				<div class="selectors">
+					<select id="targetSelect" style="width: 150px;">
+						<option value="" disabled="" selected="">Choose target...</option>
+						<option value="esp32">ESP32</option>
+						<option value="esp32s2">ESP32S2</option>
+						<option value="esp32s3">ESP32S3</option>
+						<option value="esp32c2">ESP32C2</option>
+						<option value="esp32c3">ESP32C3</option>
+					</select>
+				</div>
+				-->
+				<label for="deviceLB1">ID Code:</label>
+				<div id="deviceID1"></div><br>
+				<label for="newFirmware1">New Firmware:</label>
+					<select id="selectFirmware1" style="width: 50px;">
+						<option value="NO">NO</option>
+						<option value="YES">YES</option>
+						<option value="" disabled="">------</option>
+						<option value="RST">RST</option>
+					</select>
+					<input type="file" id="fileExplorer1" accept=".bin, .txt" style="display: none;">
+				<input id="file1" type="button" value="File" style="display: none;" onclick="openFileExplorer(1);">
+				<input id="uploadFirmWare1" type="button" value="Start" onclick="startUploadFirmw(1);">
+				<input id="cancelFirmWare1" type="button" value="Cancel"><br>
 
-		<hr>
+				<div id="selectedFileInfo1"></div>
+				<div id="uploadStatus1"></div><br>
+				
+				<label for="deviceLB2">ID Code:</label>
+				<div id="deviceID2"></div><br>
+				<label for="newFirmware2">New Firmware:</label>
+					<select id="selectFirmware2" style="width: 50px;">
+						<option value="NO">NO</option>
+						<option value="YES">YES</option>
+						<option value="" disabled="">------</option>
+						<option value="RST">RST</option>
+					</select>
+					<input type="file" id="fileExplorer2" accept=".bin, .txt" style="display: none;">
 
-		<div id="getInfo">
-			<h2> Get Info From User</h2>
-			<section>
-				<input id="deviceName1" type="text" maxlength="64" placeholder="type device name 1" value=""/>
-				<input id="command" type="text" maxlength="64" placeholder="type command" value=""/>
-				<input type="checkbox" onclick="runCode()"/>Run Code
-			</section>
-			<section>
-				<input id="deviceName2" type="text" maxlength="64" placeholder="type device name 2" value=""/>
-				<input id="command" type="text" maxlength="64" placeholder="type command" value=""/>
-			</section>
-		</div>
-		
-		<hr>
-
-		<div id="button">
-			<h2>Button</h2>
-			<div class="button">
-				<input id="checkStatus" type="button" value="Check Status"/>
+				<input id="file2" type="button" value="File" style="display: none;" onclick="openFileExplorer(2);">
+				<input id="uploadFirmWare2" type="button" value="Start" onclick="startUploadFirmw(2);">
+				<input id="cancelFirmWare2" type="button" value="Cancel">
+					<!--
+					<input id="fileExplorerButton" type="button" value="File" onclick="document.getElementById('fileExplorer').click();">
+				<a class="icon icon-home">
+				<img src="./espressif-logo.svg" class="logo" alt="Logo">
+				</a>
+				-->
+				<div id="selectedFileInfo2"></div>
+				<div id="uploadStatus2"></div>
 			</div>
+			<!--
+			<div class="statusBlock">
+				<h2>Status BLock</h2>
+				<div class="subStatus1">
+					<label for="GrLED">Gr LED </label>
+					<div id="grLED"></div>
+				</div>
+				<div class="subStatus2">
+					<label for="RdLED">Rd LED </label>
+					<div id="RdLED"></div>
+				</div>
+			</div>
+			-->
 		</div>
-
 	</body>
 </html>
